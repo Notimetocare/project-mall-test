@@ -2,6 +2,8 @@ package com.darren.project.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -9,7 +11,7 @@ public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false, length = 20)
-    private String id;
+    private Integer id;
     @Basic
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -24,13 +26,13 @@ public class Customers {
     private String phone;
     @Basic
     @Column(name = "birthday", nullable = true)
-    private Long birthday;
+    private Date birthday;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,11 +68,11 @@ public class Customers {
         this.phone = phone;
     }
 
-    public Long getBirthday() {
-        return birthday;
+    public Date getBirthday(Timestamp birthday) {
+        return this.birthday;
     }
 
-    public void setBirthday(Long birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
