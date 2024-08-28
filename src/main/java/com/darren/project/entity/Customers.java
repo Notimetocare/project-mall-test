@@ -3,8 +3,6 @@ package com.darren.project.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
