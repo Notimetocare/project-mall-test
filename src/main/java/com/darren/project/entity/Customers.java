@@ -78,16 +78,6 @@ public class Customers {
         this.birthday = birthday;
     }
 
-    // Convert birthday to Date
-    public Date getBirthdayAsDate() {
-        return birthday != null ? new Date(birthday) : null;
-    }
-
-    // Set birthday from Date
-    public void setBirthdayFromDate(Date date) {
-        this.birthday = date != null ? date.getTime() : null;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
