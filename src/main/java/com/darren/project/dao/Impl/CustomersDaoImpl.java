@@ -11,6 +11,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +25,23 @@ public class CustomersDaoImpl implements CustomersDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Override
-    public Integer creatCustomers(CustomersRegisterRequest customersRegisterRequest) {
+    public Integer creatCustomers(CustomersRegisterRequest customersRegisterRequest){
         String sql = "INSERT INTO customers(name, password, address, phone, birthday) VALUES(:name, :password, :address, :phone, :birthday)";
         Map<String, Object> map = new HashMap<>();
         map.put("name", customersRegisterRequest.getName());
         map.put("password", customersRegisterRequest.getPassword());
-        map.put("address",customersRegisterRequest.getPhone());
-        map.put("birthday",customersRegisterRequest.getBirthday());
+        map.put("address",customersRegisterRequest.getAddress());
+        map.put("phone",customersRegisterRequest.getPhone());
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date birthday = simpleDateFormat.parse(customersRegisterRequest.getBirthday());
+            Long timestamp = birthday.getTime();
+            map.put("birthday",timestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -38,7 +52,7 @@ public class CustomersDaoImpl implements CustomersDao {
 
     @Override
     public Customers getCustomersByCustomersId(Integer customersId) {
-        String sql = "SELECT name, password, address, phone, birthday from customers where id = :id";
+        String sql = "SELECT id, `name`, password, address, phone, birthday from customers where id = :id";
 
         Map<String, Object> map = new HashMap<>();
         map.put("id",customersId);

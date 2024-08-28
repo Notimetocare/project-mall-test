@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class CustomersMapper implements RowMapper<Customers> {
     @Override
@@ -16,7 +17,8 @@ public class CustomersMapper implements RowMapper<Customers> {
         customers.setName(rs.getString("name"));
         customers.setPassword(rs.getString("password"));
         customers.setAddress(rs.getString("address"));
-        customers.getBirthday(rs.getTimestamp("birthday"));
+        Long timestamp = rs.getLong("birthday");
+        customers.setBirthday(timestamp);
 
         return customers;
     }

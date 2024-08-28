@@ -1,5 +1,6 @@
 package com.darren.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -26,7 +27,8 @@ public class Customers {
     private String phone;
     @Basic
     @Column(name = "birthday", nullable = true)
-    private Date birthday;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Long birthday;
 
     public Integer getId() {
         return id;
@@ -68,12 +70,22 @@ public class Customers {
         this.phone = phone;
     }
 
-    public Date getBirthday(Timestamp birthday) {
-        return this.birthday;
+    public Long getBirthday() {
+        return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
+    }
+
+    // Convert birthday to Date
+    public Date getBirthdayAsDate() {
+        return birthday != null ? new Date(birthday) : null;
+    }
+
+    // Set birthday from Date
+    public void setBirthdayFromDate(Date date) {
+        this.birthday = date != null ? date.getTime() : null;
     }
 
     @Override

@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+
 @RestController
-public class CustomersController {
+public class UserController {
     @Autowired
     private CustomerSerivce customerSerivce;
 
     @PostMapping("customers/register")
-    public ResponseEntity<Customers> register(@RequestBody @Valid CustomersRegisterRequest customersRegisterRequest) {
+    public ResponseEntity<Customers> register(@RequestBody @Valid CustomersRegisterRequest customersRegisterRequest) throws ParseException {
         Integer customersId = customerSerivce.register(customersRegisterRequest);
 
         Customers customers = customerSerivce.getCustomersById(customersId);

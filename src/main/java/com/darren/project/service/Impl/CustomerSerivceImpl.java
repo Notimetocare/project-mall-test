@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+
 @Service
 public class CustomerSerivceImpl implements CustomerSerivce {
     @Autowired
     private CustomersDao customersDao;
 
     @Override
-    public Integer register(CustomersRegisterRequest customersRegisterRequest) {
+    public Integer register(CustomersRegisterRequest customersRegisterRequest) throws ParseException {
             Customers customersPhone = customersDao.getCustomersByphone(customersRegisterRequest.getPhone());
 
             //檢查電話是否已被註冊
