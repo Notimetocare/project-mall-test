@@ -40,5 +40,11 @@ public class GoodsController {
 
     }
 
+    @DeleteMapping("goods/{goodsId}")
+    public ResponseEntity<Void> deleteGoods(@PathVariable Integer goodsId ){
+        goodsService.deleteGoodsById(goodsId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
 
 }

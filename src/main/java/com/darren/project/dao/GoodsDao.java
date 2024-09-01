@@ -7,4 +7,6 @@ public interface GoodsDao {
     Integer createGoods(GoodsRequest goodsRequest);
 
     Goods getGoodsById(Integer goodsId);
+
+    void deleteGoodsById(Integer goodsId);
 }

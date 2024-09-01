@@ -59,4 +59,15 @@ public class GoodsDaoImpl implements GoodsDao {
         }
 
     }
+
+    @Override
+    public void deleteGoodsById(Integer goodsId) {
+        String sql = "delete from goods where id = :id";
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id",goodsId);
+
+        namedParameterJdbcTemplate.update(sql,map);
+
+    }
 }

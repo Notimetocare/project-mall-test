@@ -20,4 +20,9 @@ public class GoodsServiceImpl implements GoodsService {
     public Integer createGoods(GoodsRequest goodsRequest) {
         return goodsDao.createGoods(goodsRequest);
     }
+
+    @Override
+    public void deleteGoodsById(Integer goodsId) {
+        goodsDao.deleteGoodsById(goodsId);
+    }
 }
