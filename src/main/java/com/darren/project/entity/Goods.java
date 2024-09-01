@@ -125,7 +125,7 @@ public class Goods {
     }
 
     public String getDisplaysize() {
-        return displaysize;
+        return this.displaysize;
     }
 
     public void setDisplaysize(String displaysize) {
@@ -133,7 +133,7 @@ public class Goods {
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
 
     public void setImage(String image) {

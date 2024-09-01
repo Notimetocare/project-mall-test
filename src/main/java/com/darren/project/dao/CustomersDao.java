@@ -11,8 +11,4 @@ public interface CustomersDao {
     Customers getCustomersByCustomersId(Integer customersId);
 
     Customers getCustomersByphone(String phone);
-
-
-
-
 }

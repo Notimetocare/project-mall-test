@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 
 @RestController
-public class UserController {
+public class CustomersController {
     @Autowired
     private CustomerSerivce customerSerivce;
 
