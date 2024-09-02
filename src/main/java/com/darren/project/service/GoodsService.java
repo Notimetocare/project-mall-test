@@ -9,4 +9,6 @@ public interface GoodsService {
     Integer createGoods(GoodsRequest goodsRequest);
 
     void deleteGoodsById(Integer goodsId);
+
+    void updateGoods(Integer goodsId, GoodsRequest goodsRequest);
 }

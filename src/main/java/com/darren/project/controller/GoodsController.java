@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,5 +47,19 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
+    @PutMapping("goods/{goodsId}")
+    public ResponseEntity<Goods> updateGoods(@PathVariable Integer goodsId,
+                                             @RequestBody @Validated GoodsRequest goodsRequest){
+        Goods goods = goodsService.getGoodsById(goodsId);
+
+        if(goods == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }else{
+            goodsService.updateGoods(goodsId, goodsRequest);
+            Goods updateGoods = goodsService.getGoodsById(goodsId);
+            return ResponseEntity.status(HttpStatus.OK).body(updateGoods);
+        }
+    }
+
 
 }

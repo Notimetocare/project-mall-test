@@ -31,7 +31,4 @@ public class GoodsRequest {
     private String displaysize;
 
     private String image;
-
-
-
 }

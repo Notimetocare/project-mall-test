@@ -24,20 +24,20 @@ public class GoodsDaoImpl implements GoodsDao {
         String sql = "insert into goods (name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaysize, image) values (:name, :price, :description, :brand, :cpuBrand, :cpuType, :memoryCapacity, :hdCapacity, :cardModel, :displaysize, :image)";
 
         Map<String, Object> map = new HashMap<>();
-        map.put("name",goodsRequest.getName());
-        map.put("price",goodsRequest.getPrice());
-        map.put("description",goodsRequest.getDescription());
-        map.put("brand",goodsRequest.getBrand());
-        map.put("cpuBrand",goodsRequest.getCpuBrand());
-        map.put("cpuType",goodsRequest.getCpuType());
-        map.put("memoryCapacity",goodsRequest.getMemoryCapacity());
-        map.put("hdCapacity",goodsRequest.getHdCapacity());
-        map.put("cardModel",goodsRequest.getCardModel());
-        map.put("displaysize",goodsRequest.getDisplaysize());
-        map.put("image",goodsRequest.getImage());
+        map.put("name", goodsRequest.getName());
+        map.put("price", goodsRequest.getPrice());
+        map.put("description", goodsRequest.getDescription());
+        map.put("brand", goodsRequest.getBrand());
+        map.put("cpuBrand", goodsRequest.getCpuBrand());
+        map.put("cpuType", goodsRequest.getCpuType());
+        map.put("memoryCapacity", goodsRequest.getMemoryCapacity());
+        map.put("hdCapacity", goodsRequest.getHdCapacity());
+        map.put("cardModel", goodsRequest.getCardModel());
+        map.put("displaysize", goodsRequest.getDisplaysize());
+        map.put("image", goodsRequest.getImage());
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map),keyHolder);
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
 
         int goodsId = keyHolder.getKey().intValue();
         return goodsId;
@@ -52,9 +52,9 @@ public class GoodsDaoImpl implements GoodsDao {
         map.put("id", goodsId);
         List<Goods> goodsList = namedParameterJdbcTemplate.query(sql, map, new GoodsRowMapper());
 
-        if(goodsList.size()>0){
+        if (goodsList.size() > 0) {
             return goodsList.get(0);
-        }else{
+        } else {
             return null;
         }
 
@@ -65,9 +65,29 @@ public class GoodsDaoImpl implements GoodsDao {
         String sql = "delete from goods where id = :id";
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id",goodsId);
+        map.put("id", goodsId);
 
-        namedParameterJdbcTemplate.update(sql,map);
+        namedParameterJdbcTemplate.update(sql, map);
+    }
 
+    @Override
+    public void updateGoodsById(Integer goodsId, GoodsRequest goodsRequest) {
+        String sql = "update goods set name = :name, price = :price, description = :description, brand = :brand, cpu_brand = :cpuBrand, cpu_type = :cpuType, memory_capacity = :memoryCapacity, hd_capacity = :hdCapacity, card_model = :cardModel, displaysize = :displaysize, image = :image where id = :id";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", goodsId);
+        map.put("name", goodsRequest.getName());
+        map.put("price", goodsRequest.getPrice());
+        map.put("description", goodsRequest.getDescription());
+        map.put("brand", goodsRequest.getBrand());
+        map.put("cpuBrand", goodsRequest.getCpuBrand());
+        map.put("cpuType", goodsRequest.getCpuType());
+        map.put("memoryCapacity", goodsRequest.getMemoryCapacity());
+        map.put("hdCapacity", goodsRequest.getHdCapacity());
+        map.put("cardModel", goodsRequest.getCardModel());
+        map.put("displaysize", goodsRequest.getDisplaysize());
+        map.put("image", goodsRequest.getImage());
+
+        namedParameterJdbcTemplate.update(sql, map);
     }
 }

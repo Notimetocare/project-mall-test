@@ -25,4 +25,9 @@ public class GoodsServiceImpl implements GoodsService {
     public void deleteGoodsById(Integer goodsId) {
         goodsDao.deleteGoodsById(goodsId);
     }
+
+    @Override
+    public void updateGoods(Integer goodsId, GoodsRequest goodsRequest) {
+        goodsDao.updateGoodsById(goodsId, goodsRequest);
+    }
 }

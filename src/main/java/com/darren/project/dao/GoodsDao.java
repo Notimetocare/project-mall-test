@@ -9,4 +9,6 @@ public interface GoodsDao {
     Goods getGoodsById(Integer goodsId);
 
     void deleteGoodsById(Integer goodsId);
+
+    void updateGoodsById(Integer goodsId, GoodsRequest goodsRequest);
 }
