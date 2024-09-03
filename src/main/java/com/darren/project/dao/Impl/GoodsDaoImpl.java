@@ -1,6 +1,7 @@
 package com.darren.project.dao.Impl;
 
 import com.darren.project.dao.GoodsDao;
+import com.darren.project.dto.GoodsQueryParams;
 import com.darren.project.dto.GoodsRequest;
 import com.darren.project.entity.Goods;
 import com.darren.project.mapper.GoodsRowMapper;
@@ -18,6 +19,19 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Override
+    public Integer countGoods(GoodsQueryParams params) {
+        String sql = "select count(*) from goods where 1=1";
+
+        Map<String, Object> map = new HashMap<>();
+
+        sql = addFilteringsql(sql, map, params);
+
+        Integer total = namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
+
+        return total;
+    }
 
     @Override
     public Integer createGoods(GoodsRequest goodsRequest) {
@@ -90,4 +104,30 @@ public class GoodsDaoImpl implements GoodsDao {
 
         namedParameterJdbcTemplate.update(sql, map);
     }
+
+    @Override
+    public List<Goods> getGoods(GoodsQueryParams params) {
+        String sql = "select id, name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaysize, image from goods where 1 = 1";
+
+        Map<String, Object> map = new HashMap<>();
+        //查詢
+        sql = addFilteringsql(sql, map, params);
+        //排序
+        sql = sql + " order by "+ params.getOrderBy() + " " + params.getSort();
+        //分頁
+        sql = sql + " limit :limit offset :offset";
+        map.put("limit",params.getLimit());
+        map.put("offset",params.getOffset());
+
+        List<Goods> goodslist = namedParameterJdbcTemplate.query(sql,map, new GoodsRowMapper());
+        return goodslist;
+    }
+    private String addFilteringsql(String sql, Map<String, Object> map, GoodsQueryParams params){
+        if(params.getSearch() != null){
+            sql = sql + " and (name like :search )";
+            map.put("search", "%" + params.getSearch() + "%");
+        }
+        return sql;
+    }
+
 }

@@ -1,15 +1,21 @@
 package com.darren.project.controller;
 
+import com.darren.project.dto.GoodsQueryParams;
 import com.darren.project.dto.GoodsRequest;
 import com.darren.project.entity.Goods;
 import com.darren.project.service.GoodsService;
+import com.darren.project.util.Page;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class GoodsController {
@@ -60,6 +66,37 @@ public class GoodsController {
             return ResponseEntity.status(HttpStatus.OK).body(updateGoods);
         }
     }
+    @GetMapping("goods")
+    public ResponseEntity<Page<Goods>> getGoods(
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(defaultValue = "id") String orderBy,
+            @RequestParam(defaultValue = "5")@Max(100)@Min(0) Integer limit,
+            @RequestParam(defaultValue = "0")@Min(0) Integer offset)
+    {
+        GoodsQueryParams params = new GoodsQueryParams();
 
+        params.setLimit(limit);
+        params.setOffset(offset);
+        params.setSearch(search);
+        params.setOrderBy(orderBy);
+        params.setSort(sort);
+
+        //取得List
+        List<Goods> goodsList = goodsService.getGoods(params);
+
+        Integer total = goodsService.countGoods(params);
+
+        Page<Goods> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResult(goodsList);
+
+
+
+
+        return  ResponseEntity.status(HttpStatus.OK).body(page);
+    }
 
 }
