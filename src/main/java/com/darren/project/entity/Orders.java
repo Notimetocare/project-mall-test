@@ -1,6 +1,7 @@
 package com.darren.project.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false, length = 20)
-    private String id;
+    private Integer id;
     @Basic
     @Column(name = "order_date", nullable = true)
     private Long orderDate;
@@ -20,11 +21,11 @@ public class Orders {
     @Column(name = "total", nullable = true, precision = 0)
     private Double total;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
