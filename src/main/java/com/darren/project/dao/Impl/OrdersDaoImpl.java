@@ -59,4 +59,15 @@ public class OrdersDaoImpl implements OrdersDao {
         int ordersId = keyholder.getKey().intValue();
         return ordersId;
     }
+
+    @Override
+    public void deleteOrdersByOrdersId(Integer ordersId) {
+        String sql = "delete from orders where id = :id";
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id",ordersId);
+
+        namedParameterJdbcTemplate.update(sql, map);
+    }
 }

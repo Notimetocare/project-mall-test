@@ -21,4 +21,9 @@ public class OrderServiceImpl implements OrderService {
     public Integer createOrders(OrdersRequest ordersRequest) {
         return ordersDao.createOrder(ordersRequest);
     }
+
+    @Override
+    public void deleteOrdersByordersId(Integer ordersId) {
+        ordersDao.deleteOrdersByOrdersId(ordersId);
+    }
 }

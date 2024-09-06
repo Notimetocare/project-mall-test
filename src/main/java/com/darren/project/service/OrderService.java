@@ -7,4 +7,6 @@ public interface OrderService {
     Orders getOrderById(Integer ordersId);
 
     Integer createOrders(OrdersRequest ordersRequest);
+
+    void deleteOrdersByordersId(Integer ordersId);
 }

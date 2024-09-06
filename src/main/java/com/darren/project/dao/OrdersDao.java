@@ -8,4 +8,6 @@ public interface OrdersDao {
     Orders getOrderByOrdersId(Integer ordersId);
 
     Integer createOrder(OrdersRequest ordersRequest);
+
+    void deleteOrdersByOrdersId(Integer ordersId);
 }
