@@ -10,4 +10,5 @@ public interface CustomersDao {
 
     Customers getCustomersByCustomersId(Integer customersId);
 
+    Customers getCustomersByAccount(String acc);
 }

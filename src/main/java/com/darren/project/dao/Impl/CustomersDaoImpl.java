@@ -10,11 +10,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +25,10 @@ public class CustomersDaoImpl implements CustomersDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Override
     public Integer creatCustomers(CustomersRegisterRequest customersRegisterRequest){
-        String sql = "INSERT INTO customers(name, password, address, phone, birthday) VALUES(:name, :password, :address, :phone, :birthday)";
+        String sql = "INSERT INTO customers(Account, name, password, address, phone, birthday) VALUES(:account, :name, :password, :address, :phone, :birthday)";
         Map<String, Object> map = new HashMap<>();
-        map.put("name", customersRegisterRequest.getName());
+        map.put("account", customersRegisterRequest.getAccount());
+        map.put("name",customersRegisterRequest.getName());
         map.put("password", customersRegisterRequest.getPassword());
         map.put("address",customersRegisterRequest.getAddress());
         map.put("phone",customersRegisterRequest.getPhone());
@@ -52,7 +52,7 @@ public class CustomersDaoImpl implements CustomersDao {
 
     @Override
     public Customers getCustomersByCustomersId(Integer customersId) {
-        String sql = "SELECT id, `name`, password, address, phone, birthday from customers where id = :id";
+        String sql = "SELECT id, Account, name, password, address, phone, birthday from customers where id = :id";
 
         Map<String, Object> map = new HashMap<>();
         map.put("id",customersId);
@@ -65,4 +65,17 @@ public class CustomersDaoImpl implements CustomersDao {
         }
 
     }
+
+        @Override
+        @Transactional
+    public Customers getCustomersByAccount(String account) {
+        String sql = "select id, Account, name, password, address, phone, birthday from customers where Account = :account";
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("account",account);
+
+            List<Customers> customersList = namedParameterJdbcTemplate.query(sql, map, new CustomersMapper());
+            return !customersList.isEmpty()?customersList.get(0): null;
+
+        }
 }

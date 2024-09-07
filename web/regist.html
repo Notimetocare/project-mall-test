@@ -81,7 +81,9 @@
                     }
                 }
             }
-            request.open("GET","/customers/")
+            request.open("GET","/customers/checkAccountUsed?"+customersAccount)
+
+            request.send();
         }
         function checkCustomersPassword(){
             var customersPasswordReg = /^[a-zA-Z0-9]{5,10}$/

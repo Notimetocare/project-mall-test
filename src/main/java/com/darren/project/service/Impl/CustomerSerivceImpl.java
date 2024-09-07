@@ -19,11 +19,11 @@ public class CustomerSerivceImpl implements CustomerSerivce {
 
     @Override
     public Integer register(CustomersRegisterRequest customersRegisterRequest) throws ParseException {
-            Customers customersPhone = customersDao.getCustomersByphone(customersRegisterRequest.getPhone());
+            Customers customersAccount = customersDao.getCustomersByAccount(customersRegisterRequest.getAccount());
 
-            //檢查電話是否已被註冊
-            if(customersPhone != null){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"電話號碼已註冊");
+            //檢查帳號是否已被註冊
+            if(customersAccount != null){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"帳號已註冊");
             }
         //使用MD5進行加密
         String hashPassword = DigestUtils.md5DigestAsHex(customersRegisterRequest.getPassword().getBytes());
@@ -36,4 +36,12 @@ public class CustomerSerivceImpl implements CustomerSerivce {
     public Customers getCustomersById(Integer customersId) {
         return customersDao.getCustomersByCustomersId(customersId);
     }
+
+    @Override
+    public Customers getCustomersByAccount(String account) {
+
+        return customersDao.getCustomersByAccount(account);
+    }
+
+
 }

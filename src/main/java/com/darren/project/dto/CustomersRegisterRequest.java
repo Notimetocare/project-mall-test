@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 public class CustomersRegisterRequest {
-    @NotBlank
+    @NotBlank(message = "帳號不能為空")
     private String account;
-    @NotBlank(message = "用户名不能為空")
+    @NotBlank(message = "姓名不能為空")
     private String name;
     @NotBlank(message = "密碼不能為空")
     private String password;

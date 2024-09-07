@@ -1,6 +1,5 @@
 package com.darren.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -9,13 +8,16 @@ import java.util.Objects;
 public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "acc", nullable = false, length = 50)
+    @Column(name = "Account", nullable = false, length = 50)
+    private String account;
+    @Basic
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Basic
-    @Column(name = "password", nullable = false, length = 20)
+    @Column(name = "password", nullable = false, length = 50)
     private String password;
     @Basic
     @Column(name = "address", nullable = true, length = 100)
@@ -25,7 +27,6 @@ public class Customers {
     private String phone;
     @Basic
     @Column(name = "birthday", nullable = true)
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Long birthday;
 
     public Integer getId() {
@@ -34,6 +35,14 @@ public class Customers {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getName() {
@@ -81,11 +90,11 @@ public class Customers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customers customers = (Customers) o;
-        return Objects.equals(id, customers.id) && Objects.equals(name, customers.name) && Objects.equals(password, customers.password) && Objects.equals(address, customers.address) && Objects.equals(phone, customers.phone) && Objects.equals(birthday, customers.birthday);
+        return Objects.equals(id, customers.id) && Objects.equals(account, customers.account) && Objects.equals(name, customers.name) && Objects.equals(password, customers.password) && Objects.equals(address, customers.address) && Objects.equals(phone, customers.phone) && Objects.equals(birthday, customers.birthday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, password, address, phone, birthday);
+        return Objects.hash(id, account, name, password, address, phone, birthday);
     }
 }

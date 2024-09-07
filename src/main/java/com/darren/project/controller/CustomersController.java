@@ -1,6 +1,7 @@
 package com.darren.project.controller;
 
 import com.darren.project.dto.CustomersRegisterRequest;
+
 import com.darren.project.entity.Customers;
 import com.darren.project.service.CustomerSerivce;
 import jakarta.validation.Valid;
@@ -24,12 +25,15 @@ public class CustomersController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(customers);
     }
+
     @GetMapping("/customers/checkAccountUsed")
-    public ResponseEntity<Customers> checkAccountUsed(@PathVariable@Valid CustomersRegisterRequest customersRegisterRequest){
-        Customers customers = customerSerivce.findByCustomersAccount(customersRegisterRequest);
+    public ResponseEntity<Customers> checkAccountUsed(@RequestParam @Valid String account) {
+        Customers customers = customerSerivce.getCustomersByAccount(account);
 
-        if(customers.get)
-
+        if (null != customers) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
     }
-
 }
