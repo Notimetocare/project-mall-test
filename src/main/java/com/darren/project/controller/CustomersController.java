@@ -7,9 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 
@@ -25,6 +23,13 @@ public class CustomersController {
         Customers customers = customerSerivce.getCustomersById(customersId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(customers);
+    }
+    @GetMapping("/customers/checkAccountUsed")
+    public ResponseEntity<Customers> checkAccountUsed(@PathVariable@Valid CustomersRegisterRequest customersRegisterRequest){
+        Customers customers = customerSerivce.findByCustomersAccount(customersRegisterRequest);
+
+        if(customers.get)
+
     }
 
 }

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客戶登入</title>
+    <link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+<header>
+    <div class="header">智捷網上電腦商城</div>
+    <hr>
+</header>
+
+<main>
+
+    <form action="controller" method="post">
+        <fieldset>
+            <legend>登入</legend>
+            <div class="form-group">
+                <label for="userid">
+                    <img src="images/3.jpg" alt="用戶圖示" />
+                    客戶帳號：
+                </label>
+                <input type="text" id="userid" name="userid" class="textfield" required>
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    <img src="images/2.jpg" alt="密碼圖示" />
+                    客戶密碼：
+                </label>
+                <input type="password" id="password" name="password" class="textfield" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" formaction="/customers/login">
+                    登入
+                </button>
+                <button type="regist" formaction="/customers/regist">
+                    註冊
+                </button>
+
+            </div>
+        </fieldset>
+    </form>
+</main>
+
+</body>
+</html>

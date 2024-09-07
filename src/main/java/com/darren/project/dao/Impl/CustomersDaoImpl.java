@@ -65,9 +65,4 @@ public class CustomersDaoImpl implements CustomersDao {
         }
 
     }
-
-    @Override
-    public Customers getCustomersByphone(String phone) {
-        return null;
-    }
 }

@@ -12,7 +12,7 @@ public class Customers {
     @Column(name = "id", nullable = false, length = 20)
     private Integer id;
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "acc", nullable = false, length = 50)
     private String name;
     @Basic
     @Column(name = "password", nullable = false, length = 20)
