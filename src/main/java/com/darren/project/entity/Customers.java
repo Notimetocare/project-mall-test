@@ -11,7 +11,7 @@ public class Customers {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "Account", nullable = false, length = 50)
+    @Column(name = "account", nullable = false, length = 50)
     private String account;
     @Basic
     @Column(name = "name", nullable = false, length = 50)

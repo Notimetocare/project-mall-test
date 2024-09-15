@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="web:war exploded" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c1b27cd-549a-48f3-9ed5-7e8b7044a410" name="Changes" comment="項目搭建-mall">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/controller/CustomersController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/dao/CustomersDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/dao/OrdersDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/service/CustomerSerivce.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/web_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jackson_annotations_2_13_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-annotations-2.13.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-core-2.13.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/jackson-databind-2.13.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/lombok-1.18.24.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-8.0.25.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/webapp/regist.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/webtest/webtest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0147b3a3-be8c-4ef0-ae38-184e0650a782.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0147b3a3-be8c-4ef0-ae38-184e0650a782.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/darren/project/controller/CustomersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/controller/CustomersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/darren/project/dao/Impl/CustomersDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/dao/Impl/CustomersDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/darren/project/entity/Customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/entity/Customers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/darren/project/service/CustomerSerivce.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/darren/project/service/Impl/CustomerSerivceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darren/project/service/Impl/CustomerSerivceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/darren/project/dao/Impl/CustomersDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/darren/project/dao/Impl/CustomersDaoImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/darren/project/entity/Customers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/darren/project/entity/Customers.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/darren/project/mapper/CustomersMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/darren/project/mapper/CustomersMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/darren/project/service/CustomerSerivce.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/darren/project/service/Impl/CustomerSerivceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/darren/project/service/Impl/CustomerSerivceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/web/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/jstl.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/mysql-connector-java-5.1.41-bin.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/lib/standard.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/regist.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/regist.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +63,13 @@
       </GitPushTagMode>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -57,13 +94,22 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JPA.DatabaseSchemaImportDialog": "0147b3a3-be8c-4ef0-ae38-184e0650a782",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/code/SSM/code/sprngboot-mall_respin",
+    "last_opened_file_path": "D:/code/javaweb/code/web-all",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "6f7dbe2c0c224a74e069973dfbbcfc9b"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -74,6 +120,13 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.darren.project.service" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\code\mall project\mal-project\project\web\webapp" />
+      <recent name="D:\code\mall project\mal-project\project\web\webapp\WEB-INF\lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\code\mall project\mal-project\project\web" />
     </key>
     <key name="ImportMappingsDialog.RecentPackages">
       <recent name="com.darren.project.entity" />
@@ -86,8 +139,9 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ProjectApplication">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.24">
     <configuration name="ProjectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" />
       <module name="project" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.darren.project.ProjectApplication" />
       <method v="2">
@@ -101,6 +155,103 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tomcat 10.1.24" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.24" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="web:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="844300ae-4969-4e68-bc88-f16e6f8dcc65" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="3450" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+        <EnvironmentVariables>
+          <option name="NAME" value="CATALINA_BASE" />
+          <option name="VALUE" value="D:\code\Tomcat\apache-tomcat-10.1.24-windows-x64\apache-tomcat-10.1.24" />
+          <option name="IS_PREDEFINED" value="false" />
+        </EnvironmentVariables>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="web:war exploded" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ProjectApplication" />
+      <item itemvalue="Spring Boot.WebApplication" />
+      <item itemvalue="Tomcat Server.Tomcat 10.1.24" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -111,6 +262,10 @@
       <option name="presentableId" value="Default" />
       <updated>1724681910324</updated>
       <workItem from="1724681913446" duration="3817000" />
+      <workItem from="1725900430313" duration="700000" />
+      <workItem from="1725975916690" duration="419000" />
+      <workItem from="1725980639376" duration="1647000" />
+      <workItem from="1726317086425" duration="6153000" />
     </task>
     <servers />
   </component>

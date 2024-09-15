@@ -52,7 +52,7 @@ public class CustomersDaoImpl implements CustomersDao {
 
     @Override
     public Customers getCustomersByCustomersId(Integer customersId) {
-        String sql = "SELECT id, Account, name, password, address, phone, birthday from customers where id = :id";
+        String sql = "SELECT id, account, name, password, address, phone, birthday from customers where id = :id";
 
         Map<String, Object> map = new HashMap<>();
         map.put("id",customersId);
@@ -69,7 +69,7 @@ public class CustomersDaoImpl implements CustomersDao {
         @Override
         @Transactional
     public Customers getCustomersByAccount(String account) {
-        String sql = "select id, Account, name, password, address, phone, birthday from customers where Account = :account";
+        String sql = "select id, account, name, password, address, phone, birthday from customers where account = :account";
 
             Map<String, Object> map = new HashMap<>();
             map.put("account",account);

@@ -3,7 +3,7 @@ package com.darren.project.service.Impl;
 import com.darren.project.dao.CustomersDao;
 import com.darren.project.dto.CustomersRegisterRequest;
 import com.darren.project.entity.Customers;
-import com.darren.project.service.CustomerSerivce;
+import com.darren.project.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.text.ParseException;
 
 @Service
-public class CustomerSerivceImpl implements CustomerSerivce {
+public class CustomerSerivceImpl implements CustomerService {
     @Autowired
     private CustomersDao customersDao;
 

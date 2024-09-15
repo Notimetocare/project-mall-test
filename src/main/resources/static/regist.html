@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>客戶註冊</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css">
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .boder {
+            border: 1px solid #5B96D0;
+        }
+
+        .col1 {
+            background-color: #A6D2FF;
+            text-align: right;
+            padding-right: 10px;
+            border: 1px solid #5B96D0;
+            line-height: 50px;
+        }
+
+        .col2 {
+            padding-left: 10px;
+            border: 1px solid #5B96D0;
+            line-height: 50px;
+        }
+
+        .textfield {
+            height: 20px;
+            width: 200px;
+            border: 1px solid #999999;
+            text-align: left;
+            font-size: medium;
+            line-height: 50px;
+        }
+
+        .error {
+            color: red;
+            list-style-type: none;
+        }
+
+        .text3 {
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 0 auto;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function checkCustomersAccount() {
+            console.log("checkCustomersAccount called")
+            var customersAccountReg = /^[a-zA-Z0-9]{5,10}$/
+            var account = document.getElementById("customersAccountInput").value
+            var customersAccountMsgSpan = document.getElementById("customersAccountMsg")
+            if (!customersAccountReg.test(account)) {
+                customersAccountMsgSpan.innerText = "格式不符"
+                return false
+            }
+                //格式正確後，繼續較驗用戶名是否占用
+            var request = new XMLHttpRequest();
+            var encodedAccount = encodeURIComponent(account);
+            var requestUrl = "http://localhost:8080/customers/checkAccountUsed?account=" + encodedAccount;
+            console.log("Request URL:", requestUrl);
+
+            request.onreadystatechange = function() {
+                if (request.readyState === XMLHttpRequest.DONE) {
+                    if (request.status === 200) {
+                        var result = JSON.parse(request.responseText);
+                        console.log("Result:", result);
+                        customersAccountMsgSpan.innerText = result.message;
+                    } else if (request.status === 400) {
+                        var error = JSON.parse(request.responseText);
+                        customersAccountMsgSpan.innerText = error.message;
+                    } else {
+                        console.log("Unexpected status:", request.status);
+                        customersAccountMsgSpan.innerText = "請求失敗：" + request.status;
+                    }
+                }
+            };
+
+            request.open("GET", requestUrl, true);
+            request.send();
+        }
+
+            function checkCustomersPassword() {
+                var customersPasswordReg = /^[a-zA-Z0-9]{5,10}$/
+                var customersPassword = document.getElementById("customersPasswordInput").value
+                var customersPasswordMsgSpan = document.getElementById("customersPasswordMsg")
+                if (!customersPasswordReg.test(customersPassword)) {
+                    customersPasswordMsgSpan.innerText = "格式不符"
+                    return false
+                } else
+                    customersPasswordMsgSpan.innerText = "OK"
+                return true
+            }
+
+            function checkReCustomersPassword() {
+                var customersPassword = document.getElementById("customersPasswordInput").value
+                var reCustomersPassword = document.getElementById("reCustomersPasswordInput").value
+                var reCustomersPasswordMsgSpan = document.getElementById("reCustomersPasswordMsg")
+
+                if (customersPassword !== reCustomersPassword) {
+                    reCustomersPasswordMsgSpan.innerText = "不一致";
+                    return false;
+                } else {
+                    reCustomersPasswordMsgSpan.innerText = "OK";
+                    return true;
+                }
+            }
+
+            function validateDateFormat(dateString) {
+                var dateReg = /^\d{4}-\d{2}-\d{2}$/
+                if (!dateReg.test(dateString)) {
+                    return false
+                }
+
+                var [year, month, day] = dateString.split('-').map(num => parseInt(num, 10))
+                var birthday = new Date(year, month - 1, day);
+                var isValidDate = (birthday.getFullYear() === year &&
+                    birthday.getMonth() === month - 1 &&
+                    birthday.getDate() === day);
+                return isValidDate;
+            }
+
+            function checkBirthday() {
+                var birthdayInput = document.getElementById("birthday")
+                var birthdayValue = birthdayInput.value
+                var msgSpan = document.getElementById("birthdayMsg")
+
+                if (!validateDateFormat(birthdayValue)) {
+                    msgSpan.innerText = "日期格式不符"
+                    return false;
+                } else {
+                    msgSpan.innerText = "OK"
+                    return true;
+                }
+
+            }
+
+    </script>
+</head>
+
+<body>
+</div>
+<br>
+<hr width="100%"/>
+<div class="text3" align="center">請填寫下列資訊</div>
+<br>
+
+<form action="/customers/regist" method="post" onsubmit="return verify(this)">
+    <table class="boder">
+        <tr>
+            <td class="col1">客戶帳號: <br>
+                </td>
+            <td class="col2"><input type="text" id="customersAccountInput" name="account" class="textfield" onblur="checkCustomersAccount()"
+            placeholder="5-10位大小寫英文及數字組合" style="font-size: 12px"/>
+                <span id="customersAccountMsg" class="msg"></span>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="col1">客戶姓名：</td>
+            <td class="col2"><input type="text" id="customersName" name="customername" class="textfield"/>*</td>
+        </tr>
+        <tr>
+            <td class="col1">客戶密碼：</td>
+            <td class="col2"><input type="password" id="customersPasswordInput" name="customersPassword" class="textfield" onblur="checkCustomersPassword()"
+                                    placeholder="5-10位大小寫英文及數字組合" style="font-size: 12px"/>
+                <span id="customersPasswordMsg" class="msg"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1">再次輸入密碼：</td>
+            <td class="col2"><input type="password" id="reCustomersPasswordInput" name="reCustomersPassword" class="textfield" onblur="checkReCustomersPassword()"/>
+            <span id="reCustomersPasswordMsg" class="msg"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1">出生日期：</td>
+            <td class="col2"><input type="text" id="birthday" name="birthday" class="textfield" oninput="checkBirthday()"/>
+                <span>格式（YYYY-MM-DD）</span>
+                <span id="birthdayMsg" class="msg"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1">通訊地址：</td>
+            <td class="col2"><input type="text" name="address" class="textfield"/></td>
+        </tr>
+        <tr>
+            <td class="col1">電話號碼：</td>
+            <td class="col2"><input type="text" name="phone" class="textfield"/></td>
+        </tr>
+    </table>
+    <br>
+    <div align="center">
+        <input type="image" src="/images/submit_button.jpg" class="submit-btn" alt="提交"/>
+    </div>
+    <input type="hidden" name="action" value="reg">
+</form>
+
+</body>
+</html>
