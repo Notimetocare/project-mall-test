@@ -95,9 +95,9 @@
 
             function checkCustomersPassword() {
                 var customersPasswordReg = /^[a-zA-Z0-9]{5,10}$/
-                var customersPassword = document.getElementById("customersPasswordInput").value
+                var password = document.getElementById("customersPasswordInput").value
                 var customersPasswordMsgSpan = document.getElementById("customersPasswordMsg")
-                if (!customersPasswordReg.test(customersPassword)) {
+                if (!customersPasswordReg.test(password)) {
                     customersPasswordMsgSpan.innerText = "格式不符"
                     return false
                 } else
@@ -147,6 +147,10 @@
                 }
 
             }
+        function checkForm(){
+            return checkCustomersAccount() && checkCustomersPassword()  && checkBirthday()
+
+        }
 
     </script>
 </head>
@@ -158,7 +162,7 @@
 <div class="text3" align="center">請填寫下列資訊</div>
 <br>
 
-<form action="/customers/regist" method="post" onsubmit="return verify(this)">
+<form action="/customers/register" method="post" onsubmit="return checkForm()">
     <table class="boder">
         <tr>
             <td class="col1">客戶帳號: <br>
@@ -171,11 +175,11 @@
         </tr>
         <tr>
             <td class="col1">客戶姓名：</td>
-            <td class="col2"><input type="text" id="customersName" name="customername" class="textfield"/>*</td>
+            <td class="col2"><input type="text" id="customersName" name="name" class="textfield"/>*</td>
         </tr>
         <tr>
             <td class="col1">客戶密碼：</td>
-            <td class="col2"><input type="password" id="customersPasswordInput" name="customersPassword" class="textfield" onblur="checkCustomersPassword()"
+            <td class="col2"><input type="password" id="customersPasswordInput" name="password" class="textfield" onblur="checkCustomersPassword()"
                                     placeholder="5-10位大小寫英文及數字組合" style="font-size: 12px"/>
                 <span id="customersPasswordMsg" class="msg"></span>
             </td>
@@ -204,7 +208,10 @@
     </table>
     <br>
     <div align="center">
-        <input type="image" src="/images/submit_button.jpg" class="submit-btn" alt="提交"/>
+        <button type="submit" method="post" class="submit-btn">
+            <image src="/images/submit_button.jpg" alt="提交"></image>
+        </button>
+        <!--<input type="image" src="/images/submit_button.jpg" class="submit-btn" alt="提交"/>-->
     </div>
     <input type="hidden" name="action" value="reg">
 </form>

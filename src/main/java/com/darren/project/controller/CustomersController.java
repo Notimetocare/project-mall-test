@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.text.ParseException;
 
@@ -22,13 +23,15 @@ public class CustomersController {
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/customers/regist")
-    public ResponseEntity<Customers> regist(@RequestBody @Valid CustomersRegisterRequest customersRegisterRequest) throws ParseException {
+    @PostMapping("/customers/register")
+    public RedirectView register(@RequestBody @Valid CustomersRegisterRequest customersRegisterRequest) throws ParseException {
         Integer customersId = customerService.register(customersRegisterRequest);
 
-        Customers customers = customerService.getCustomersById(customersId);
+        if(customersId != null){
+                    return new RedirectView("/login.html");
+                }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(customers);
+        return new RedirectView("/register.html");
     }
 
 

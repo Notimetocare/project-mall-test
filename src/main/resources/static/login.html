@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>客戶登入</title>
     <link rel="stylesheet" href="css/public.css">
+    <script>
+        function setFormAction(actionUrl) {
+            document.getElementById("loginForm").action = actionUrl;
+        }
+
+        function goToRegisterPage() {
+            // 直接跳转到註冊頁
+            window.location.href = 'regist.html';
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -14,7 +24,7 @@
 
 <main>
 
-    <form action="controller" method="post">
+    <form id="loginForm" action="controller" method="post">
         <fieldset>
             <legend>登入</legend>
             <div class="form-group">
@@ -32,13 +42,12 @@
                 <input type="password" id="password" name="password" class="textfield" required>
             </div>
             <div class="form-actions">
-                <button type="submit" formaction="login.html">
+                <button type="submit" onclick="setFormAction('login.html')">
                     登入
                 </button>
-                <button type="submit" formaction="regist.html">
+                <button type="button" onclick="goToRegisterPage()">
                     註冊
                 </button>
-
             </div>
         </fieldset>
     </form>
