@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -24,14 +27,15 @@ public class CustomersController {
     private CustomerService customerService;
 
     @PostMapping("/customers/register")
-    public RedirectView register(@RequestBody @Valid CustomersRegisterRequest customersRegisterRequest) throws ParseException {
+    public ResponseEntity register(@ModelAttribute @Valid CustomersRegisterRequest customersRegisterRequest) throws ParseException {
         Integer customersId = customerService.register(customersRegisterRequest);
 
         if(customersId != null){
-                    return new RedirectView("/login.html");
-                }
 
-        return new RedirectView("/register.html");
+            return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/login.html").build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
