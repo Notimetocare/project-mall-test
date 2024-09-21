@@ -58,6 +58,7 @@
     </style>
 
     <script>
+
         function checkCustomersAccount() {
             console.log("checkCustomersAccount called")
             var customersAccountReg = /^[a-zA-Z0-9]{5,10}$/
@@ -67,7 +68,7 @@
                 customersAccountMsgSpan.innerText = "格式不符"
                 return false
             }
-                //格式正確後，繼續較驗用戶名是否占用
+            //格式正確後，繼續較驗用戶名是否占用
             var request = new XMLHttpRequest();
             var encodedAccount = encodeURIComponent(account);
             var requestUrl = "http://localhost:8080/customers/checkAccountUsed?account=" + encodedAccount;
@@ -93,82 +94,120 @@
             request.send();
         }
 
-            function checkCustomersPassword() {
-                var customersPasswordReg = /^[a-zA-Z0-9]{5,10}$/
-                var password = document.getElementById("customersPasswordInput").value
-                var customersPasswordMsgSpan = document.getElementById("customersPasswordMsg")
-                if (!customersPasswordReg.test(password)) {
-                    customersPasswordMsgSpan.innerText = "格式不符"
-                    return false
-                } else
-                    customersPasswordMsgSpan.innerText = "OK"
-                return true
+        function checkCustomersPassword() {
+            var customersPasswordReg = /^[a-zA-Z0-9]{5,10}$/
+            var password = document.getElementById("customersPasswordInput").value
+            var customersPasswordMsgSpan = document.getElementById("customersPasswordMsg")
+            if (!customersPasswordReg.test(password)) {
+                customersPasswordMsgSpan.innerText = "格式不符"
+                return false
+            } else
+                customersPasswordMsgSpan.innerText = "OK"
+            return true
+        }
+
+        function checkReCustomersPassword() {
+            var customersPassword = document.getElementById("customersPasswordInput").value
+            var reCustomersPassword = document.getElementById("reCustomersPasswordInput").value
+            var reCustomersPasswordMsgSpan = document.getElementById("reCustomersPasswordMsg")
+
+            if (customersPassword !== reCustomersPassword) {
+                reCustomersPasswordMsgSpan.innerText = "不一致";
+                return false;
+            } else {
+                reCustomersPasswordMsgSpan.innerText = "OK";
+                return true;
+            }
+        }
+
+        function validateDateFormat(dateString) {
+            var dateReg = /^\d{4}-\d{2}-\d{2}$/
+            if (!dateReg.test(dateString)) {
+                return false
             }
 
-            function checkReCustomersPassword() {
-                var customersPassword = document.getElementById("customersPasswordInput").value
-                var reCustomersPassword = document.getElementById("reCustomersPasswordInput").value
-                var reCustomersPasswordMsgSpan = document.getElementById("reCustomersPasswordMsg")
+            var [year, month, day] = dateString.split('-').map(num => parseInt(num, 10))
+            var birthday = new Date(year, month - 1, day);
+            var isValidDate = (birthday.getFullYear() === year &&
+                birthday.getMonth() === month - 1 &&
+                birthday.getDate() === day);
+            return isValidDate;
+        }
 
-                if (customersPassword !== reCustomersPassword) {
-                    reCustomersPasswordMsgSpan.innerText = "不一致";
-                    return false;
-                } else {
-                    reCustomersPasswordMsgSpan.innerText = "OK";
-                    return true;
-                }
+        function checkBirthday() {
+            var birthdayInput = document.getElementById("birthday")
+            var birthdayValue = birthdayInput.value
+            var msgSpan = document.getElementById("birthdayMsg")
+
+            if (!validateDateFormat(birthdayValue)) {
+                msgSpan.innerText = "日期格式不符"
+                return false;
+            } else {
+                msgSpan.innerText = "OK"
+                return true;
             }
 
-            function validateDateFormat(dateString) {
-                var dateReg = /^\d{4}-\d{2}-\d{2}$/
-                if (!dateReg.test(dateString)) {
-                    return false
-                }
+        }
+        function checkForm(event){
+            event.preventDefault()
+            let flag1 = checkCustomersAccount()
+            let flag2 = checkCustomersPassword()
+            let flag3 = checkBirthday()
+            if (flag1 && flag2 && flag3) {
+                const formElement = document.getElementById("registForm")
+                const formData = new FormData(formElement);
 
-                var [year, month, day] = dateString.split('-').map(num => parseInt(num, 10))
-                var birthday = new Date(year, month - 1, day);
-                var isValidDate = (birthday.getFullYear() === year &&
-                    birthday.getMonth() === month - 1 &&
-                    birthday.getDate() === day);
-                return isValidDate;
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                    console.log(key, value);
+                });
+                fetch('/customers/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        console.log(response);
+                        if (response.ok) {
+                            return response.json();
+                        } else if (!response.ok) {
+                            throw new Error('Network response was not ok: ' + response.statusText);
+                        }
+                    })
+                    .then(result => {
+                        console.log(result);
+                        // 處理成功结果
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message);
+                        // 處理錯誤
+                    });
+            }else{
+                alert("請填寫正確資訊")
             }
-
-            function checkBirthday() {
-                var birthdayInput = document.getElementById("birthday")
-                var birthdayValue = birthdayInput.value
-                var msgSpan = document.getElementById("birthdayMsg")
-
-                if (!validateDateFormat(birthdayValue)) {
-                    msgSpan.innerText = "日期格式不符"
-                    return false;
-                } else {
-                    msgSpan.innerText = "OK"
-                    return true;
-                }
-
-            }
-        function checkForm(){
-            return checkCustomersAccount() && checkCustomersPassword()  && checkBirthday()
-
         }
 
     </script>
 </head>
 
 <body>
+
 </div>
 <br>
 <hr width="100%"/>
 <div class="text3" align="center">請填寫下列資訊</div>
 <br>
 
-<form action="/customers/register" method="post" onsubmit="return checkForm()">
+<form action="/customers/register" method="post" onsubmit="checkForm(); return false;">
     <table class="boder">
         <tr>
             <td class="col1">客戶帳號: <br>
-                </td>
+            </td>
             <td class="col2"><input type="text" id="customersAccountInput" name="account" class="textfield" onblur="checkCustomersAccount()"
-            placeholder="5-10位大小寫英文及數字組合" style="font-size: 12px"/>
+                                    placeholder="5-10位大小寫英文及數字組合" style="font-size: 12px"/>
                 <span id="customersAccountMsg" class="msg"></span>
             </td>
 
@@ -187,7 +226,7 @@
         <tr>
             <td class="col1">再次輸入密碼：</td>
             <td class="col2"><input type="password" id="reCustomersPasswordInput" name="reCustomersPassword" class="textfield" onblur="checkReCustomersPassword()"/>
-            <span id="reCustomersPasswordMsg" class="msg"></span>
+                <span id="reCustomersPasswordMsg" class="msg"></span>
             </td>
         </tr>
         <tr>
@@ -208,13 +247,11 @@
     </table>
     <br>
     <div align="center">
-        <button type="submit" method="post" class="submit-btn">
+        <button type="submit" class="submit-btn">
             <image src="/images/submit_button.jpg" alt="提交"></image>
         </button>
         <!--<input type="image" src="/images/submit_button.jpg" class="submit-btn" alt="提交"/>-->
     </div>
-    <input type="hidden" name="action" value="reg">
 </form>
-
 </body>
 </html>

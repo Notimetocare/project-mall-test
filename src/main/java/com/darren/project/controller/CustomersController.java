@@ -1,5 +1,6 @@
 package com.darren.project.controller;
 
+import com.darren.project.dto.CustomerLoginRequest;
 import com.darren.project.dto.CustomersRegisterRequest;
 
 import com.darren.project.entity.Customers;
@@ -11,14 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 @RestController
@@ -55,4 +53,15 @@ public class CustomersController {
                 .contentType(MediaType.APPLICATION_JSON)  // Set Content-Type header
                 .body(result);
     }
+    @PostMapping("/customers/login")
+        public ResponseEntity<Customers> login(@ModelAttribute @Valid CustomerLoginRequest customersLoginRequest) throws ParseException {
+            Customers customers= customerService.login(customersLoginRequest);
+
+            if(customers != null){
+                return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/goods_list.html").build();
+                }
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
 }

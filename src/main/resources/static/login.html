@@ -6,10 +6,6 @@
     <title>客戶登入</title>
     <link rel="stylesheet" href="css/public.css">
     <script>
-        function setFormAction(actionUrl) {
-            document.getElementById("loginForm").action = actionUrl;
-        }
-
         function goToRegisterPage() {
             // 直接跳转到註冊頁
             window.location.href = 'regist.html';
@@ -24,15 +20,15 @@
 
 <main>
 
-    <form id="loginForm" action="controller" method="post">
+    <form id="loginForm" action="/customers/login" method="post">
         <fieldset>
             <legend>登入</legend>
             <div class="form-group">
-                <label for="userid">
+                <label for="account">
                     <img src="images/3.jpg" alt="用戶圖示" />
                     客戶帳號：
                 </label>
-                <input type="text" id="userid" name="userid" class="textfield" required>
+                <input type="text" id="account" name="account" class="textfield" required>
             </div>
             <div class="form-group">
                 <label for="password">
@@ -42,7 +38,7 @@
                 <input type="password" id="password" name="password" class="textfield" required>
             </div>
             <div class="form-actions">
-                <button type="submit" onclick="setFormAction('login.html')">
+                <button type="submit">
                     登入
                 </button>
                 <button type="button" onclick="goToRegisterPage()">
