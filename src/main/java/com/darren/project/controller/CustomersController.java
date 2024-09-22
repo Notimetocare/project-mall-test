@@ -58,7 +58,7 @@ public class CustomersController {
             Customers customers= customerService.login(customersLoginRequest);
 
             if(customers != null){
-                return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/goods_list.html").build();
+                return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/main.html").build();
                 }
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

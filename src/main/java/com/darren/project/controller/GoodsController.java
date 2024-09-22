@@ -69,13 +69,14 @@ public class GoodsController {
     @GetMapping("goods")
     public ResponseEntity<Page<Goods>> getGoods(
             @RequestParam(required = false) String search,
-            @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(defaultValue = "asc") String sort,
             @RequestParam(defaultValue = "id") String orderBy,
             @RequestParam(defaultValue = "5")@Max(100)@Min(0) Integer limit,
-            @RequestParam(defaultValue = "0")@Min(0) Integer offset)
+            @RequestParam(defaultValue = "1")@Max(1000)@Min(0) Integer page)
     {
         GoodsQueryParams params = new GoodsQueryParams();
 
+        int offset = (page - 1) * limit;
         params.setLimit(limit);
         params.setOffset(offset);
         params.setSearch(search);
@@ -87,16 +88,17 @@ public class GoodsController {
 
         Integer total = goodsService.countGoods(params);
 
-        Page<Goods> page = new Page<>();
-        page.setLimit(limit);
-        page.setOffset(offset);
-        page.setTotal(total);
-        page.setResult(goodsList);
+        Page<Goods> resultPage = new Page<>();
+        resultPage.setLimit(limit);
+        resultPage.setOffset(offset);
+        resultPage.setTotal(total);
+        resultPage.setResult(goodsList);
 
 
 
 
-        return  ResponseEntity.status(HttpStatus.OK).body(page);
+        return  ResponseEntity.status(HttpStatus.OK).body(resultPage);
     }
+
 
 }

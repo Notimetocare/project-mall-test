@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="goods_header.jsp" flush="true" >
+<jsp:include page="goods_header.html" flush="true" >
     <jsp:param name="image" value="info.jpg" />
 </jsp:include>
 <hr width="100%"/>
