@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>商品列表</title>
-    <link rel="stylesheet" type="text/css" href="/css/public.css">
     <style>
         table {
             border-collapse: collapse;
@@ -38,77 +37,76 @@
             border: 1px solid #ddd;
             border-radius: 3px;
         }
-        .pagination .active a {
+        .pagination .active {
             background-color: #b4c8ed;
             color: white;
         }
     </style>
 </head>
 <body>
-<div align="center">請從商品列表中選擇您喜愛的商品</div>
-<br>
-<table id="goodsTable" border="0" align="center">
-    <thead>
-    <tr>
-        <th>商品名稱</th>
-        <th width="15%">商品價格</th>
-        <th width="20%">添加到購物車</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 商品数据将通过 JavaScript 填充 -->
-    </tbody>
-</table>
-<hr />
-<div align="center" id="pagination"></div>
+<div id="app">
+    <h2 align="center">請從商品列表中選擇您喜愛的商品</h2>
+    <table id="goodsTable" border="0" align="center">
+        <thead>
+        <tr>
+            <th>商品名稱</th>
+            <th width="15%">商品價格</th>
+            <th width="20%">添加到購物車</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(goods, index) in goodsList" :key="goods.id" :class="index % 2 === 0 ? 'even-row' : 'odd-row'">
+            <td><a :href="`/goods/${goods.id}`">{{ goods.name }}</a></td>
+            <td>${{ goods.price }}</td>
+            <td><a :href="`/goods/add?id=${goods.id}&name=${goods.name}&price=${goods.price}`">添加到購物車</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div align="center" id="pagination">
+        <ul class="pagination">
+            <li><a href="#" @click.prevent="goToPage(1)">«</a></li>
+            <li v-for="page in totalPages" :key="page">
+                <a href="#" @click.prevent="goToPage(page)" :class="{ active: currentPage === page }">{{ page }}</a>
+            </li>
+            <li><a href="#" @click.prevent="goToPage(totalPages)">»</a></li>
+        </ul>
+    </div>
+</div>
 
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
-    async function fetchGoods(page = 1) {
-        const limit = 5; // 每頁商品數
-        const response = await fetch(`/goods?page=${page}`);
-        const data = await response.json();
+    const app = Vue.createApp({
+        data() {
+            return {
+                goodsList: [],
+                currentPage: 1,
+                limit: 5,
+                totalItems: 0,
+            };
+        },
+        computed: {
+            totalPages() {
+                return Math.ceil(this.totalItems / this.limit);
+            },
+        },
+        methods: {
+            async fetchGoods(page = 1) {
+                const response = await fetch(`/goods?page=${page}`);
+                const data = await response.json();
+                this.goodsList = data.result;
+                this.totalItems = data.total;
+            },
+            goToPage(page) {
+                this.currentPage = page;
+                this.fetchGoods(page);
+            },
+        },
+        mounted() {
+            this.fetchGoods(this.currentPage);
+        },
+    });
 
-        const goodsList = data.result;
-        const totalPageNumber = Math.ceil(data.total / limit);
-
-        const goodsTableBody = document.querySelector('#goodsTable tbody');
-        goodsTableBody.innerHTML = ''; // 清空表格内容
-
-        goodsList.forEach((goods, index) => {
-            const row = goodsTableBody.insertRow();
-            row.className = index % 2 === 0 ? 'even-row' : 'odd-row';
-
-            const cell1 = row.insertCell(0);
-            cell1.innerHTML = `<a href="/goods/${goods.id}">${goods.name}</a>`;
-
-            const cell2 = row.insertCell(1);
-            cell2.textContent = `$${goods.price}`;
-
-            const cell3 = row.insertCell(2);
-            cell3.innerHTML = `<a href="/goods/add?id=${goods.id}&name=${goods.name}&price=${goods.price}">添加到購物車</a>`;
-        });
-
-        renderPagination(totalPageNumber, page);
-    }
-
-    function renderPagination(totalPages, currentPage) {
-        const pagination = document.getElementById('pagination');
-        pagination.innerHTML = `<ul class="pagination">
-            <li><a href="#" onclick="goToPage(1)">«</a></li>
-            ${Array.from({ length: totalPages }, (_, i) => `
-                <li class="${i + 1 === currentPage ? 'active' : ''}">
-                    <a href="#" onclick="goToPage(${i + 1})">${i + 1}</a>
-                </li>
-            `).join('')}
-            <li><a href="#" onclick="goToPage(${totalPages})">»</a></li>
-        </ul>`;
-    }
-
-    function goToPage(page) {
-        fetchGoods(page);
-    }
-
-    window.onload = () => fetchGoods();
+    app.mount('#app');
 </script>
 </body>
 </html>
