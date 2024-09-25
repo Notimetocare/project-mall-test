@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-Hant" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>商品詳細</title>
+    <link rel="stylesheet" type="text/css" href="/css/public.css">
+    <style type="text/css">
+        .title {
+            font-size: 20px;
+            color: #FF6600;
+            font-style: italic;
+        }
+        .text3, .text4, .text5, .text6 {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>商品詳情</h1>
+    <img src="/images/info.jpg" alt="商品圖片" />
+</header>
+<hr width="100%"/>
+<div class="text3" align="center" id="description" th:text="${goods.description}"></div>
+<table width="100%" border="0" align="center">
+    <tr>
+        <td width="40%" align="right">
+            <div>
+                <img id="product-image" th:src="@{${imagePath}}" width="360px" height="360px" alt="商品圖片"/>
+            </div>
+            <br>
+        </td>
+        <td>
+            <div align="center" class="text4">一口價：<span class="title" id="price" th:text="'￥' + ${goods.price} + '元'"></span></div>
+            <br>
+            <table width="80%" height="200" border="0">
+                <tbody>
+                <tr>
+                    <td width="25%" class="text5">電腦品牌：</td>
+                    <td width="25%" class="text6" id="brand" th:text="${goods.brand}"></td>
+                    <td width="25%" class="text5">CPU品牌：</td>
+                    <td width="25%" class="text6" id="cpuBrand" th:text="${goods.cpuBrand}"></td>
+                </tr>
+                <tr>
+                    <td class="text5">內存容量：</td>
+                    <td class="text6" id="memoryCapacity" th:text="${goods.memoryCapacity}"></td>
+                    <td class="text5">CPU型號：</td>
+                    <td class="text6" id="cpuType" th:text="${goods.cpuType}"></td>
+                </tr>
+                <tr>
+                    <td class="text5">硬盤容量：</td>
+                    <td class="text6" id="hdCapacity" th:text="${goods.hdCapacity}"></td>
+                    <td class="text5">顯卡類型：</td>
+                    <td class="text6" id="cardModel" th:text="${goods.cardModel}"></td>
+                </tr>
+                <tr>
+                    <td class="text5">顯示器尺寸：</td>
+                    <td class="text6" id="displaySize" th:text="${goods.displaySize}"></td>
+                    <td class="text5">&nbsp;</td>
+                    <td class="text6">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <div>
+                <a id="add-to-cart" href="#"><img src="/images/button.jpg" alt="添加到購物車"/></a>
+            </div>
+        </td>
+    </tr>
+</table>
+<footer>
+    <p>&copy; 2024 商品詳情頁面</p>
+</footer>
+</body>
+</html>

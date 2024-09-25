@@ -38,8 +38,8 @@ public class Goods {
     @Column(name = "card_model", nullable = true, length = 30)
     private String cardModel;
     @Basic
-    @Column(name = "displaysize", nullable = true, length = 30)
-    private String displaysize;
+    @Column(name = "displaySize", nullable = true, length = 30)
+    private String displaySize;
     @Basic
     @Column(name = "image", nullable = true, length = 100)
     private String image;
@@ -124,12 +124,12 @@ public class Goods {
         this.cardModel = cardModel;
     }
 
-    public String getDisplaysize() {
-        return this.displaysize;
+    public String getDisplaySize() {
+        return this.displaySize;
     }
 
-    public void setDisplaysize(String displaysize) {
-        this.displaysize = displaysize;
+    public void setDisplaySize(String displaySize) {
+        this.displaySize = displaySize;
     }
 
     public String getImage() {
@@ -145,11 +145,11 @@ public class Goods {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goods goods = (Goods) o;
-        return Objects.equals(id, goods.id) && Objects.equals(name, goods.name) && Objects.equals(price, goods.price) && Objects.equals(description, goods.description) && Objects.equals(brand, goods.brand) && Objects.equals(cpuBrand, goods.cpuBrand) && Objects.equals(cpuType, goods.cpuType) && Objects.equals(memoryCapacity, goods.memoryCapacity) && Objects.equals(hdCapacity, goods.hdCapacity) && Objects.equals(cardModel, goods.cardModel) && Objects.equals(displaysize, goods.displaysize) && Objects.equals(image, goods.image);
+        return Objects.equals(id, goods.id) && Objects.equals(name, goods.name) && Objects.equals(price, goods.price) && Objects.equals(description, goods.description) && Objects.equals(brand, goods.brand) && Objects.equals(cpuBrand, goods.cpuBrand) && Objects.equals(cpuType, goods.cpuType) && Objects.equals(memoryCapacity, goods.memoryCapacity) && Objects.equals(hdCapacity, goods.hdCapacity) && Objects.equals(cardModel, goods.cardModel) && Objects.equals(displaySize, goods.displaySize) && Objects.equals(image, goods.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, description, brand, cpuBrand, cpuType, memoryCapacity, hdCapacity, cardModel, displaysize, image);
+        return Objects.hash(id, name, price, description, brand, cpuBrand, cpuType, memoryCapacity, hdCapacity, cardModel, displaySize, image);
     }
 }

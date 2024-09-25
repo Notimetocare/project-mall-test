@@ -36,6 +36,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 10.1.24" level="application_server_libraries" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jdbc:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:5.1.0" level="project" />
@@ -72,8 +73,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.1.12" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: mysql:mysql-connector-java:8.0.30" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java:3.19.4" level="project" />
-    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.34" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:3.3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:3.3.3" level="project" />
@@ -84,6 +84,12 @@
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.23.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:2.0.16" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring6:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:3.1.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.attoparser:attoparser:2.0.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.34" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:3.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test:3.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:3.3.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.jayway.jsonpath:json-path:2.9.0" level="project" />
@@ -135,6 +141,5 @@
     <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.16.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jakarta.servlet:jakarta.servlet-api:6.0.0" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 10.1.24" level="application_server_libraries" />
   </component>
 </module>

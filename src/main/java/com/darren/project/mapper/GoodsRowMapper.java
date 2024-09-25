@@ -22,7 +22,7 @@ public class GoodsRowMapper implements RowMapper {
         goods.setMemoryCapacity(rs.getString("memory_capacity"));
         goods.setHdCapacity(rs.getString("hd_capacity"));
         goods.setCardModel(rs.getString("card_model"));
-        goods.setDisplaysize(rs.getString("displaysize"));
+        goods.setDisplaySize(rs.getString("displaySize"));
         goods.setImage(rs.getString("image"));
 
         return goods;

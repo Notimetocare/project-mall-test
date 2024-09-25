@@ -35,7 +35,7 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Override
     public Integer createGoods(GoodsRequest goodsRequest) {
-        String sql = "insert into goods (name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaysize, image) values (:name, :price, :description, :brand, :cpuBrand, :cpuType, :memoryCapacity, :hdCapacity, :cardModel, :displaysize, :image)";
+        String sql = "insert into goods (name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaySize, image) values (:name, :price, :description, :brand, :cpuBrand, :cpuType, :memoryCapacity, :hdCapacity, :cardModel, :displaysize, :image)";
 
         Map<String, Object> map = new HashMap<>();
         map.put("name", goodsRequest.getName());
@@ -47,7 +47,7 @@ public class GoodsDaoImpl implements GoodsDao {
         map.put("memoryCapacity", goodsRequest.getMemoryCapacity());
         map.put("hdCapacity", goodsRequest.getHdCapacity());
         map.put("cardModel", goodsRequest.getCardModel());
-        map.put("displaysize", goodsRequest.getDisplaysize());
+        map.put("displaySize", goodsRequest.getDisplaysize());
         map.put("image", goodsRequest.getImage());
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -60,7 +60,7 @@ public class GoodsDaoImpl implements GoodsDao {
     @Override
     public Goods getGoodsById(Integer goodsId) {
 
-        String sql = "select id, name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaysize, image from goods where id= :id";
+        String sql = "select id, name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaySize, image from goods where id= :id";
 
         Map<String, Object> map = new HashMap<>();
         map.put("id", goodsId);
@@ -86,7 +86,7 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Override
     public void updateGoodsById(Integer goodsId, GoodsRequest goodsRequest) {
-        String sql = "update goods set name = :name, price = :price, description = :description, brand = :brand, cpu_brand = :cpuBrand, cpu_type = :cpuType, memory_capacity = :memoryCapacity, hd_capacity = :hdCapacity, card_model = :cardModel, displaysize = :displaysize, image = :image where id = :id";
+        String sql = "update goods set name = :name, price = :price, description = :description, brand = :brand, cpu_brand = :cpuBrand, cpu_type = :cpuType, memory_capacity = :memoryCapacity, hd_capacity = :hdCapacity, card_model = :cardModel, displaySize = :displaysize, image = :image where id = :id";
 
         Map<String, Object> map = new HashMap<>();
         map.put("id", goodsId);
@@ -107,7 +107,7 @@ public class GoodsDaoImpl implements GoodsDao {
 
     @Override
     public List<Goods> getGoods(GoodsQueryParams params) {
-        String sql = "select id, name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaysize, image from goods where 1 = 1";
+        String sql = "select id, name, price, description, brand, cpu_brand, cpu_type, memory_capacity, hd_capacity, card_model, displaySize, image from goods where 1 = 1";
 
         Map<String, Object> map = new HashMap<>();
         //查詢

@@ -56,7 +56,7 @@
         </thead>
         <tbody>
         <tr v-for="(goods, index) in goodsList" :key="goods.id" :class="index % 2 === 0 ? 'even-row' : 'odd-row'">
-            <td><a :href="`/goods/${goods.id}`">{{ goods.name }}</a></td>
+            <td><a :href="`/goods_detail?goodsId=${goods.id}`">{{ goods.name }}</a></td>
             <td>${{ goods.price }}</td>
             <td><a :href="`/goods/add?id=${goods.id}&name=${goods.name}&price=${goods.price}`">添加到購物車</a></td>
         </tr>

@@ -9,11 +9,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -22,15 +23,18 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
-    @GetMapping("goods/{goodsId}")
-    public ResponseEntity<Goods> getGoods(@PathVariable Integer goodsId){
-       Goods goods = goodsService.getGoodsById(goodsId);
+    @GetMapping("/goods_detail")
+    public ModelAndView getGoods(@RequestParam("goodsId") Integer goodsId, Model model){
+        Goods goods = goodsService.getGoodsById(goodsId);
 
-       if(goods != null){
-           return ResponseEntity.status(HttpStatus.OK).body(goods);
-       }else {
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-       }
+        if(goods != null){
+            String imagePath = "/goods_images/" + goods.getImage();
+            model.addAttribute("goods", goods);
+            model.addAttribute("imagePath", imagePath);
+            return new ModelAndView("goods_detail");
+        }else {
+            return new ModelAndView("error", "message", "商品不存在");
+        }
     }
 
     @PostMapping("goods")
