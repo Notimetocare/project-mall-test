@@ -1,0 +1,92 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <title>購物車</title>
+    <link rel="stylesheet" type="text/css" href="/css/public.css">
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .threeboder {
+            border: 1px solid #5B96D0;
+        }
+        .trow {
+            border-right: 1px solid #5B96D0;
+            border-bottom: 1px solid #5A96D6;
+        }
+        .theader {
+            background-color: #A5D3FF;
+            font-size: 14px;
+            border-right: 1px solid #5B96D0;
+            border-bottom: 1px solid #5A96D6;
+        }
+    </style>
+
+    <script>
+        function calc(rowid, quantityInput) {
+            let quantity = parseInt(quantityInput.value);
+            if (isNaN(quantity) || quantity < 0) {
+                alert("請輸入有效的數量！");
+                quantityInput.value = 0;
+                quantityInput.focus();
+                return;
+            }
+
+            const price = parseFloat(document.getElementById('price_' + rowid).innerText);
+            const subtotalId = 'subtotal_' + rowid;
+            const subtotalOld = parseFloat(document.getElementById(subtotalId).innerText);
+            document.getElementById(subtotalId).innerText = (quantity * price).toFixed(2);
+
+            const subtotalNew = parseFloat(document.getElementById(subtotalId).innerText);
+            let total = parseFloat(document.getElementById('total').innerText);
+            total = total - subtotalOld + subtotalNew;
+            document.getElementById('total').innerText = total.toFixed(2);
+        }
+    </script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header(image='mycar.jpg')"></div>
+<hr width="100%"/>
+<div class="text3" align="center">您選擇的商品</div>
+<br>
+<form action="@{/goods/add}" method="post">
+    <table class="threeboder">
+        <thead>
+        <tr bgcolor="#A5D3FF">
+            <th align="center" class="theader">商品名稱</th>
+            <th width="8%" align="center" class="theader">數量</th>
+            <th width="15%" align="center" class="theader">單價</th>
+            <th width="15%" align="center" class="theader">小計</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="row : ${cart}">
+            <tr>
+                <td align="left" class="trow">
+                    <span th:text="${row.goods.name}"></span>
+                </td>
+                <td align="center" class="trow">
+                    <input name="quantity_${row.goodsid}" type="number" th:value="${row.quantity}" min="0" aria-label="數量" onblur="calc(${row.goodsid}, this)" />
+                </td>
+                <td align="center" class="trow">&yen;<span id="price_${row.goodsid}" th:text="${row.price}"></span></td>
+                <td align="center" class="trow">&yen;<span id="subtotal_${row.goodsid}" th:text="${row.price * row.quantity}"></span></td>
+            </tr>
+        </th:block>
+        <tr>
+            <td colspan="3" align="right">合計：&yen;<span id="total" th:text="${total}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+      <div align="center">
+        <div th:if="${not #lists.isEmpty(cart)}">
+            <input type="image" th:src="/images/submit_order.jpg" border="0" alt="提交訂單" />&nbsp;&nbsp;
+        </div>
+    </div>
+    <input type="hidden" name="action" value="sub_ord" />
+</form>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

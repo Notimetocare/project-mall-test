@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="zh-Hant" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title>商品詳細</title>
@@ -14,8 +14,11 @@
             font-family: Arial, sans-serif;
         }
     </style>
+    <script src="https://unpkg.com/vue@3.5.10/dist/vue.global.js"></script>
+
 </head>
 <body>
+<div id = "app">
 <header>
     <h1>商品詳情</h1>
     <img src="/images/info.jpg" alt="商品圖片" />
@@ -31,7 +34,7 @@
             <br>
         </td>
         <td>
-            <div align="center" class="text4">一口價：<span class="title" id="price" th:text="'￥' + ${goods.price} + '元'"></span></div>
+            <div align="center" class="text4">一口價：<span class="title" id="price" th:text="'$' + ${goods.price} + '元'"></span></div>
             <br>
             <table width="80%" height="200" border="0">
                 <tbody>
@@ -64,7 +67,9 @@
             <br>
             <br>
             <div>
-                <a id="add-to-cart" href="#"><img src="/images/button.jpg" alt="添加到購物車"/></a>
+                <button type="button"  @click="addedToCart" style="border: none;">
+                    <img src="/images/button.jpg" alt="添加到購物車">
+                </button>
             </div>
         </td>
     </tr>
@@ -72,5 +77,44 @@
 <footer>
     <p>&copy; 2024 商品詳情頁面</p>
 </footer>
+</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                goods: {
+                    id: /*[[${goods.id}]]*/,
+                    name: /*[[${goods.name}]]*/,
+                    price: /*[[${goods.price}]]*/,
+                }
+            };
+        },
+
+        methods: {
+            async addedToCart() {
+                const response = await fetch('/goods/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        goodsId: this.goods.id,
+                        goodsName: this.goods.name,
+                        goodsPrice: this.goods.price,
+                    }),
+                });
+
+                if (response.ok) {
+                    alert('商品已成功添加到購物車！');
+                } else {
+                    const errorData = await response.json();
+                    alert('添加商品到購物車失敗！' + (errorData.message || ''));
+                }
+            },
+        },
+    });
+
+    app.mount('#app');
+</script>
 </body>
 </html>

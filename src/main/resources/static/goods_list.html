@@ -58,7 +58,8 @@
         <tr v-for="(goods, index) in goodsList" :key="goods.id" :class="index % 2 === 0 ? 'even-row' : 'odd-row'">
             <td><a :href="`/goods_detail?goodsId=${goods.id}`">{{ goods.name }}</a></td>
             <td>${{ goods.price }}</td>
-            <td><a :href="`/goods/add?id=${goods.id}&name=${goods.name}&price=${goods.price}`">添加到購物車</a></td>
+            <td> <button type="button" @click.prevent="addToCart(goods)">添加到購物車</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -80,7 +81,7 @@
             return {
                 goodsList: [],
                 currentPage: 1,
-                limit: 5,
+                limit: 8,
                 totalItems: 0,
             };
         },
@@ -95,6 +96,26 @@
                 const data = await response.json();
                 this.goodsList = data.result;
                 this.totalItems = data.total;
+            },
+            async addToCart(goods) {
+                console.log(goods);
+                const response = await fetch('/goods/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        goodsId: goods.id,
+                        goodsName: goods.name,
+                        goodsPrice: goods.price,
+                    }),
+                });
+
+                if (response.ok) {
+                    alert('商品已成功添加到購物車！');
+                } else {
+                    alert('添加商品到購物車失敗！');
+                }
             },
             goToPage(page) {
                 this.currentPage = page;
