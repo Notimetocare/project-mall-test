@@ -14,11 +14,42 @@
             font-family: Arial, sans-serif;
         }
     </style>
-    <script src="https://unpkg.com/vue@3.5.10/dist/vue.global.js"></script>
+    <script>
 
+        function addedToCart() {
+            const goodsId = "[[${goods.id}]]";
+            const goodsName = "[[${goods.name}]]";
+            const goodsPrice = "[[${goods.price}]]";
+
+            fetch("/goods/add",
+                {
+                    method: "POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body: JSON.stringify({
+                        goodsId: goodsId,
+                        goodsName: goodsName,
+                        goodsPrice: goodsPrice
+                    }),
+                })
+                .then(response=>{
+                    if(response.ok){
+                        alert("商品已加入購物車");
+                    }else{
+                        return response.json().then(errorData=>{
+                            alert(errorData.message);
+                        });
+                    }
+                })
+                .catch(error=>{
+                    console.log(error);
+                    alert("加入購物車失敗");
+                });
+        }
+    </script>
 </head>
 <body>
-<div id = "app">
 <header>
     <h1>商品詳情</h1>
     <img src="/images/info.jpg" alt="商品圖片" />
@@ -67,8 +98,8 @@
             <br>
             <br>
             <div>
-                <button type="button"  @click="addedToCart" style="border: none;">
-                    <img src="/images/button.jpg" alt="添加到購物車">
+                <button type="button"  onclick="addedToCart()">
+                    <img src="/images/button.jpg" alt="加入購物車"/>
                 </button>
             </div>
         </td>
@@ -78,43 +109,5 @@
     <p>&copy; 2024 商品詳情頁面</p>
 </footer>
 </div>
-<script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                goods: {
-                    id: /*[[${goods.id}]]*/,
-                    name: /*[[${goods.name}]]*/,
-                    price: /*[[${goods.price}]]*/,
-                }
-            };
-        },
-
-        methods: {
-            async addedToCart() {
-                const response = await fetch('/goods/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        goodsId: this.goods.id,
-                        goodsName: this.goods.name,
-                        goodsPrice: this.goods.price,
-                    }),
-                });
-
-                if (response.ok) {
-                    alert('商品已成功添加到購物車！');
-                } else {
-                    const errorData = await response.json();
-                    alert('添加商品到購物車失敗！' + (errorData.message || ''));
-                }
-            },
-        },
-    });
-
-    app.mount('#app');
-</script>
 </body>
 </html>
