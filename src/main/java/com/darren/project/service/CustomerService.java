@@ -3,6 +3,7 @@ package com.darren.project.service;
 import com.darren.project.dto.CustomerLoginRequest;
 import com.darren.project.dto.CustomersRegisterRequest;
 import com.darren.project.entity.Customers;
+import jakarta.servlet.http.HttpSession;
 
 import java.text.ParseException;
 
@@ -15,4 +16,6 @@ public interface CustomerService {
     Customers getCustomersByAccount(String account);
 
     Customers login(CustomerLoginRequest customersLoginRequest);
+
+    Customers getCurrentCustomers(HttpSession session);
 }

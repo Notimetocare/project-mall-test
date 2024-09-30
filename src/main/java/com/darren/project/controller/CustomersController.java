@@ -7,6 +7,7 @@ import com.darren.project.entity.Customers;
 import com.darren.project.service.CustomerService;
 
 import com.darren.project.util.Result;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,14 +55,27 @@ public class CustomersController {
                 .body(result);
     }
     @PostMapping("/customers/login")
-        public ResponseEntity<Customers> login(@ModelAttribute @Valid CustomerLoginRequest customersLoginRequest) throws ParseException {
+        public ResponseEntity<Customers> login(@ModelAttribute @Valid CustomerLoginRequest customersLoginRequest, HttpSession session) throws ParseException {
             Customers customers= customerService.login(customersLoginRequest);
+            System.out.println("login"+customers);
 
             if(customers != null){
+                session.setAttribute("customers",customers);
                 return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/main.html").build();
                 }
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+    @PostMapping("/customers/logout")
+    public ResponseEntity<Customers> logout(HttpSession session) throws ParseException {
+        Customers customersAccount= customerService.getCurrentCustomers(session);
+        System.out.println("logout"+customersAccount);
 
+        if(customersAccount != null){
+            session.invalidate();
+            return ResponseEntity.status(HttpStatus.OK).body(customersAccount);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 }

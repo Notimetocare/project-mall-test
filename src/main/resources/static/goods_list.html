@@ -45,7 +45,8 @@
 </head>
 <body>
 <div id="app">
-    <h2 align="center">請從商品列表中選擇您喜愛的商品</h2>
+    <header-component :image="headerImage" @logout="logout"></header-component>
+    <h2 align="left">請從商品列表中選擇您喜愛的商品</h2>
     <table id="goodsTable" border="0" align="center">
         <thead>
         <tr>
@@ -76,9 +77,36 @@
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
+    const HeaderComponent = {
+        props: ['image'],
+        template: `
+            <table width="100%" border="0" align="center">
+            <tbody>
+            <tr>
+               <td width="100%" align="right" style="text-align: right;">
+                        <img src="images/mycar1.jpg" align="center" style="margin-right: 10px;"/>
+                      <a href="controller?action=cart">購物車</a>
+                      <a href="controller?action=list" style="margin-left: 10px;">商品列表</a>
+                      <a href="#" @click="logout()" style="margin-left: 10px;">登出</a>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        `,
+        methods:{
+            logout(){
+                this.$emit('logout');
+            }
+        }
+    };
+
     const app = Vue.createApp({
+        components: {
+            'header-component': HeaderComponent,
+        },
         data() {
             return {
+                headerImage: "images",
                 goodsList: [],
                 currentPage: 1,
                 limit: 8,
@@ -115,6 +143,21 @@
                     alert('商品已成功添加到購物車！');
                 } else {
                     alert('添加商品到購物車失敗！');
+                }
+            },
+            async logout(){
+                const response = await fetch('/customers/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (response.ok) {
+                    const customer = await response.json();
+                    alert(`您已成功登出，歡迎再次光臨！${customer.name}`);
+                    window.location.href = '/customers/login';
+                } else {
+                    alert('登出失敗！');
                 }
             },
             goToPage(page) {

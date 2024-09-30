@@ -5,8 +5,11 @@ import com.darren.project.dto.CustomerLoginRequest;
 import com.darren.project.dto.CustomersRegisterRequest;
 import com.darren.project.entity.Customers;
 import com.darren.project.service.CustomerService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
@@ -57,6 +60,21 @@ public class CustomerSerivceImpl implements CustomerService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"密碼錯誤");
         }
         return customers;
+    }
+
+    @Override
+    public Customers getCurrentCustomers(HttpSession session) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()){
+            String account = authentication.getName();
+            Customers customers = customersDao.getCustomersByAccount(account);
+
+            if(customers == null){
+                customers = (Customers)session.getAttribute("customers");
+            }
+            return customers;
+        }
+        return null;
     }
 
 
