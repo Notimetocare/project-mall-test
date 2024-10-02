@@ -84,10 +84,10 @@
             <tbody>
             <tr>
                <td width="100%" align="right" style="text-align: right;">
-                        <img src="images/mycar1.jpg" align="center" style="margin-right: 10px;"/>
-                      <a href="controller?action=cart">購物車</a>
-                      <a href="controller?action=list" style="margin-left: 10px;">商品列表</a>
-                      <a href="#" @click="logout()" style="margin-left: 10px;">登出</a>
+                        <img src="images/mycar1.jpg" align="center" style="...">
+                      <a href="controller?action=cart" style="...">購物車</a>&emsp;
+                      <a href="controller?action=list" style="...">商品列表</a>&emsp;
+                      <a href="#" @click="logout" >登出</a>
                     </td>
                 </tr>
             </tbody>
@@ -153,9 +153,9 @@
                     },
                 });
                 if (response.ok) {
-                    const customer = await response.json();
-                    alert(`您已成功登出，歡迎再次光臨！${customer.name}`);
-                    window.location.href = '/customers/login';
+                    const data = await response.json();
+                    alert(data.message);
+                    window.location.href = '/login.html';
                 } else {
                     alert('登出失敗！');
                 }

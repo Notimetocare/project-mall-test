@@ -62,20 +62,7 @@ public class CustomerSerivceImpl implements CustomerService {
         return customers;
     }
 
-    @Override
-    public Customers getCurrentCustomers(HttpSession session) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.isAuthenticated()){
-            String account = authentication.getName();
-            Customers customers = customersDao.getCustomersByAccount(account);
 
-            if(customers == null){
-                customers = (Customers)session.getAttribute("customers");
-            }
-            return customers;
-        }
-        return null;
-    }
 
 
 }

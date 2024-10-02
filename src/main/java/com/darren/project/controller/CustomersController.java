@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.text.ParseException;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -58,24 +59,25 @@ public class CustomersController {
         public ResponseEntity<Customers> login(@ModelAttribute @Valid CustomerLoginRequest customersLoginRequest, HttpSession session) throws ParseException {
             Customers customers= customerService.login(customersLoginRequest);
             System.out.println("login"+customers);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("session", CustomerLoginRequest.class);
+            System.out.println(session);
 
             if(customers != null){
                 session.setAttribute("customers",customers);
                 return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header("Location", "/main.html").build();
                 }
-
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
     @PostMapping("/customers/logout")
-    public ResponseEntity<Customers> logout(HttpSession session) throws ParseException {
-        Customers customersAccount= customerService.getCurrentCustomers(session);
-        System.out.println("logout"+customersAccount);
+    public ResponseEntity<Map<String, String>> logout(HttpSession session) throws ParseException {
+        session.invalidate();
 
-        if(customersAccount != null){
-            session.invalidate();
-            return ResponseEntity.status(HttpStatus.OK).body(customersAccount);
-        }
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "您已成功登出");
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok(response);
+
+
     }
 }
