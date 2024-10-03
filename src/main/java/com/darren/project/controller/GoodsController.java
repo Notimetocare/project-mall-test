@@ -6,6 +6,7 @@ import com.darren.project.dto.GoodsRequest;
 import com.darren.project.entity.Goods;
 import com.darren.project.service.GoodsService;
 import com.darren.project.util.Page;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -104,13 +106,42 @@ public class GoodsController {
     }
 
     @PostMapping("goods/add")
-    public ResponseEntity<Goods>  addGoodsRequest(@RequestBody @Valid AddGoodsRequest addGoodsRequest, Model model) {
+    public ResponseEntity<Void>  addGoodsRequest(@RequestBody @Valid AddGoodsRequest addGoodsRequest, HttpSession session) {
         Integer goodsId = addGoodsRequest.getGoodsId();
         Goods goods = goodsService.getGoodsById(goodsId);
-        if (goods != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(goods);
-        } else {
+
+        if (goods == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        List<AddGoodsRequest> cart = (List<AddGoodsRequest>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        System.out.println("Current cart in session: " + session.getAttribute("cart"));
+
+        addGoodsRequest.setGoodsName(goods.getName());
+        addGoodsRequest.setGoodsPrice(goods.getPrice());
+        addGoodsRequest.setQuantity(1);
+        cart.add(addGoodsRequest);
+
+        System.out.println(addGoodsRequest.toString());
+
+        session.setAttribute("cart", cart);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+       }
+    @GetMapping("/cart")
+    public ModelAndView getCart(HttpSession session) {
+        List<AddGoodsRequest> cart = (List<AddGoodsRequest>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();
+            session.setAttribute("cart", cart);
+        }
+        ModelAndView modelAndView = new ModelAndView("cart");
+        modelAndView.addObject("cartItem", cart);
+        return modelAndView;
     }
-}
+
+    }
+
+

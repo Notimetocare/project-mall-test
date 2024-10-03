@@ -12,4 +12,7 @@ public class AddGoodsRequest {
     private String goodsName;
     @NotNull
     private Double goodsPrice;
+
+    private Integer quantity;
+
 }
