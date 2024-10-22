@@ -106,7 +106,7 @@ public class GoodsController {
     }
 
     @PostMapping("goods/add")
-    public ResponseEntity<Void>  addGoodsRequest(@RequestBody @Valid AddGoodsRequest addGoodsRequest, HttpSession session) {
+    public ResponseEntity<Double>  addGoodsRequest(@RequestBody @Valid AddGoodsRequest addGoodsRequest, HttpSession session) {
         Integer goodsId = addGoodsRequest.getGoodsId();
         Goods goods = goodsService.getGoodsById(goodsId);
 
@@ -117,8 +117,16 @@ public class GoodsController {
         if (cart == null) {
             cart = new ArrayList<>();
         }
+        //防止商品重複添加(已存在商品數量+1)
+        for (AddGoodsRequest item : cart) {
+            if (item.getGoodsId().equals(goodsId)) {
+                item.setQuantity(item.getQuantity() + 1);
+                session.setAttribute("cart", cart);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        }
         System.out.println("Current cart in session: " + session.getAttribute("cart"));
-
+        addGoodsRequest.setGoodsId(goodsId);
         addGoodsRequest.setGoodsName(goods.getName());
         addGoodsRequest.setGoodsPrice(goods.getPrice());
         addGoodsRequest.setQuantity(1);
@@ -128,8 +136,17 @@ public class GoodsController {
 
         session.setAttribute("cart", cart);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
-       }
+            return ResponseEntity.ok(calculateTotalPrice(cart));
+        }
+
+        private Double calculateTotalPrice(List<AddGoodsRequest> cart) {
+            Double totalPrice = 0.0;
+            for (AddGoodsRequest item : cart) {
+                totalPrice += item.getQuantity() * item.getGoodsPrice();
+            }
+            return totalPrice;
+        }
+
     @GetMapping("/cart")
     public ModelAndView getCart(HttpSession session) {
         List<AddGoodsRequest> cart = (List<AddGoodsRequest>) session.getAttribute("cart");
@@ -137,8 +154,9 @@ public class GoodsController {
             cart = new ArrayList<>();
             session.setAttribute("cart", cart);
         }
+
         ModelAndView modelAndView = new ModelAndView("cart");
-        modelAndView.addObject("cartItem", cart);
+        modelAndView.addObject("cartrow", cart);
         return modelAndView;
     }
 

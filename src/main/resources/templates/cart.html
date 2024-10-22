@@ -1,36 +1,81 @@
 <form action="@{/goods/add}" method="post">
-    <table class="threeboder">
+    <script>
+        function calc(goodsId, quantity) {
+            console.log("Calculating subtotal for goodsId: " + goodsId + " with quantity: " + quantity.value);
+            var priceElement = document.getElementById("price_" + goodsId);
+            console.log("Price element for goodsId: " + goodsId + " = " + priceElement);
+
+            if (priceElement) {
+                var price = parseFloat(priceElement.textContent) || 0;
+                var qtyValue = parseInt(quantity.value) || 0;
+                var subtotal = price * qtyValue;
+
+                console.log("Price for goodsId: " + goodsId + " = " + price);
+                console.log("Quantity for goodsId: " + goodsId + " = " + qtyValue);
+
+                var subtotalElement = document.getElementById("subtotal_" + goodsId);
+                if (subtotalElement) {
+                    subtotalElement.textContent = subtotal.toFixed(2);
+                } else {
+                    console.error("Subtotal element not found for goodsId: " + goodsId);
+                }
+                console.log("Subtotal for goodsId: " + goodsId + " = " + subtotal);
+
+                var total = 0;
+                var subtotalElements = document.querySelectorAll("[id^='subtotal_']");
+                subtotalElements.forEach(function (subtotalElement) {
+                    total += parseFloat(subtotalElement.textContent) || 0;
+                });
+
+                document.getElementById("total").textContent = total.toFixed(2);
+            }
+        }
+
+        window.onload = function () {
+
+        };
+    </script>
+
+    <table className="threeboder">
         <thead>
         <tr bgcolor="#A5D3FF">
-            <th align="center" class="theader">商品名稱</th>
-            <th width="8%" align="center" class="theader">數量</th>
-            <th width="15%" align="center" class="theader">單價</th>
-            <th width="15%" align="center" class="theader">小計</th>
+            <th align="center" className="theader">商品名稱</th>
+            <th width="8%" align="center" className="theader">數量</th>
+            <th width="15%" align="center" className="theader">單價</th>
+            <th width="15%" align="center" className="theader">小計</th>
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="item : ${cartItem}">
+        <th:block th:each="row : ${cartrow}">
             <tr>
-                <td align="left" class="trow">
-                    <span th:text="${item.goodsName}"></span>
+                <td align="left" className="trow">
+                    <span th:text="${row.goodsName}">123</span>
                 </td>
-                <td align="center" class="trow">
-                    <input name="quantity_${item.goodsId}" type="number" th:value="${item.quantity}" min="0" aria-label="數量" onblur="calc(${item.goodsId}, this)" />
+                <td align="center" className="trow">
+                    <input type="hidden" name="goodsId" th:value="${row.goodsId}"/>
+                    <input name="quantity_${row.goodsId}" type="number" th:value="${row.quantity}" min="0"
+                           aria-label="數量" th:attr="oninput=${'calc(' + row.goodsId + ', this)'}"/>
                 </td>
-                <td align="center" class="trow">&yen;<span id="price_${item.goodsId}" th:text="${item.goodsPrice}"></span></td>
-                <td align="center" class="trow">&yen;<span id="subtotal_${item.goodsId}" th:text="${item.goodsPrice * item.quantity}"></span></td>
+                <td align="center" className="trow">$<span th:id="'price_' + ${row.goodsId}" th:text="${row.goodsPrice}"></span>
+                </td>
+                <td align="center" className="trow">
+                    $<span th:id="'subtotal_' + ${row.goodsId}"
+                           th:text="${row.goodsPrice != null && row.quantity != null ? (row.goodsPrice * row.quantity) : 0}"></span>
+                </td>
             </tr>
-            <td colspan="4" style="height: 2px; background-color: #5A96D6;"></td> <!-- 分隔行 -->
+            <td colSpan="4" style="height: 2px; background-color: #5A96D6;"></td> <!-- 分隔 -->
         </th:block>
         <tr>
-            <td colspan="3" align="right">合計：&yen;<span id="total" th:text="${total}"></span></td>
+            <td colSpan="3" align="right">合計：$<span id="total">0.00</span></td>
         </tr>
         </tbody>
     </table>
+
     <div align="center">
         <div th:if="${not #lists.isEmpty(cart)}">
-            <input type="image" th:src="/images/submit_order.jpg" border="0" alt="提交訂單" />&nbsp;&nbsp;
+            <input type="image" th:src="@{/images/submit_order.jpg}" border="0" alt="提交訂單"/>&nbsp;&nbsp;
         </div>
     </div>
-    <input type="hidden" name="action" value="sub_ord" />
+
+    <input type="hidden" name="action" value="sub_ord"/>
 </form>

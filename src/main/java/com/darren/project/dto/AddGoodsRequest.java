@@ -14,5 +14,4 @@ public class AddGoodsRequest {
     private Double goodsPrice;
 
     private Integer quantity;
-
 }
