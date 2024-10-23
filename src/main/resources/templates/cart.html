@@ -1,3 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        /* 在這裡可以添加樣式 */
+        .threeboder { border: 1px solid #ccc; }
+        .theader { font-weight: bold; }
+        .trow { padding: 8px; }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <header-component :image="headerImage" @logout="handleLogout" @cart="goToCart"></header-component>
+
+
 <form action="@{/goods/add}" method="post">
     <script>
         function calc(goodsId, quantity) {
@@ -49,7 +69,7 @@
         <th:block th:each="row : ${cartrow}">
             <tr>
                 <td align="left" className="trow">
-                    <span th:text="${row.goodsName}">123</span>
+                    <span th:text="${row.goodsName}"></span>
                 </td>
                 <td align="center" className="trow">
                     <input type="hidden" name="goodsId" th:value="${row.goodsId}"/>
@@ -72,10 +92,63 @@
     </table>
 
     <div align="center">
-        <div th:if="${not #lists.isEmpty(cart)}">
+        <div th:if="${cartrow.size() > 0}">
+
             <input type="image" th:src="@{/images/submit_order.jpg}" border="0" alt="提交訂單"/>&nbsp;&nbsp;
         </div>
     </div>
 
     <input type="hidden" name="action" value="sub_ord"/>
 </form>
+</div>
+
+<script>
+    const HeaderComponent = {
+        props: ['image'],
+        template: `
+            <table width="100%" border="0" align="center">
+                <tbody>
+                    <tr>
+                        <td width="100%" align="right" style="text-align: right;">
+                            <a href="goods_list.html" style="...">商品列表</a>&emsp;
+                            <a href="controller?action=order" style="...">我的帳戶</a>&emsp;
+                            <a href="#" @click="logout">登出</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        `,
+        methods: {
+            logout() {
+                this.$emit('logout');
+            },
+            cart() {
+                this.$emit('cart');
+            }
+        }
+    };
+
+    const app = Vue.createApp({
+        data() {
+            return {
+                headerImage: 'path/to/your/image.jpg' // 替換為您的圖片路徑
+            };
+        },
+        methods: {
+            handleLogout() {
+                console.log('登出');
+                // 在這裡添加登出邏輯
+            },
+            goToCart() {
+                console.log('跳轉到購物車');
+                // 在這裡添加跳轉邏輯
+            }
+        }
+    });
+
+    app.component('header-component', HeaderComponent);
+    app.mount('#app');
+</script>
+
+</body>
+</html>

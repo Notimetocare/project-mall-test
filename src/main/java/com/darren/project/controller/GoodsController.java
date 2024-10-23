@@ -6,6 +6,8 @@ import com.darren.project.dto.GoodsRequest;
 import com.darren.project.entity.Goods;
 import com.darren.project.service.GoodsService;
 import com.darren.project.util.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -26,6 +28,7 @@ import java.util.List;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
+
 
     @GetMapping("/goods_detail")
     public ModelAndView getGoods(@RequestParam("goodsId") Integer goodsId, Model model) {
@@ -148,7 +151,7 @@ public class GoodsController {
         }
 
     @GetMapping("/cart")
-    public ModelAndView getCart(HttpSession session) {
+    public ModelAndView getCart(HttpSession session) throws JsonProcessingException {
         List<AddGoodsRequest> cart = (List<AddGoodsRequest>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();
@@ -156,7 +159,7 @@ public class GoodsController {
         }
 
         ModelAndView modelAndView = new ModelAndView("cart");
-        modelAndView.addObject("cartrow", cart);
+         modelAndView.addObject("cartrow", cart);
         return modelAndView;
     }
 
